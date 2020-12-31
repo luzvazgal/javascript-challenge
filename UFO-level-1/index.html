@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link rel="stylesheet" href="../static/css/style.css">
 </head>
-<body>
+<body onload="displayData()">
   <div class="wrapper">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -40,7 +40,7 @@
                       </li>
                     </ul>
                   </div>
-                  <button id="filter-btn" type="button" class="btn btn-default">Filter Table</button>
+                  <button id="filter-btn" type="button" class="btn btn-default" onclick="filterByDate()">Filter Table</button>
                 </form>
               </div>
             </div>
