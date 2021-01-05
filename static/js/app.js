@@ -17,16 +17,103 @@ function filterByDate()
     //Setting date Filter to user's date input
     dateFilter = document.getElementById("datetime").value
 
-    //Clear previous displayed results in page
-    var rows = tbody.selectAll("tr")
-    rows.remove()
+    //Validate Date format
+    if (validateDate()){
+        //Clear previous displayed results in page
+        var rows = tbody.selectAll("tr")
+        rows.remove()
 
-    //console.log("filter by date")
-    //console.log(dateFilter)
-
-    //Loading data according to selected Date
-    loadData()
+        //Loading data according to selected Date
+        loadData()
+    }
+    else{
+        alert("Insert a valid date format mm/dd/yyyy")
+    }
     
+    
+}
+
+/**
+ * Validates whether the date format is valid or not
+ * return isValid True if user's date input has a valid format, either : mm/dd/yyyy or m/d/yyyy
+ */
+function validateDate()
+{
+    let isValid = true;
+
+    console.log("Validación 0 " + dateFilter.match(/\//g))
+
+    //If date doesn't have either first or second '/', date format is not valid
+    if (dateFilter.match(/\//g).length != 2 ){
+        console.log("Validación 1 " + dateFilter.match(/\//g).length)
+        return false
+    }
+
+    let month =  dateFilter.substring(0, dateFilter.indexOf('/'))
+    let day = dateFilter.substring(dateFilter.indexOf('/')+1, dateFilter.lastIndexOf('/'))
+    let year = dateFilter.substring(dateFilter.lastIndexOf('/')+1)
+
+    //Validates if month is a number between 1 and 12
+    console.log("Validación 2a " + dateFilter.substring(0,1))
+    if(parseInt(month, 10)>=1 && parseInt(month, 10)<=12){
+        month = parseInt(month, 10)
+        console.log("Validación 2")
+    }
+    else
+        return false
+
+    //Validates if day is valid to month's input
+    console.log("Validación 3a " + parseInt(day, 10) + " month: "+month)
+
+
+    switch (month){
+        //Feb
+        case 2:
+            if(parseInt(day, 10)>=1 && parseInt(day, 10)<=28){
+                day = parseInt(day, 10)
+                console.log("Validación 4")
+            }
+            else
+                return false
+            break;
+
+        //Apr, Jun, Sep, Nov
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            console.log("Entro switch")
+            if(parseInt(day, 10)>=1 && parseInt(day, 10)<=30){
+                day = parseInt(day, 10)
+                console.log("Validación 5")
+            }
+            else
+                return false
+            break;
+
+        //Jan, Mar, May, Jul, Aug, Oct, Dec
+        default:
+            console.log("Entro switch default")
+            if(parseInt(day, 10)>=1 && parseInt(day, 10)<=31){
+                day = parseInt(day, 10)
+                console.log("Validación 3")
+            }
+            else
+                return false
+            break;
+    }
+
+    //Validates year is a valid four digit number
+    console.log("Validación 4a " + parseInt(year, 10))
+    if (year.length !=4 || isNaN(parseInt(year, 10)))
+    {
+        console.log("Validación 6")
+       return false
+    }
+   
+    dateFilter = month.toString()+"/"+day.toString()+"/"+year
+
+    return isValid;
 }
 
 /**
