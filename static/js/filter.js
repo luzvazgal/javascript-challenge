@@ -1,16 +1,9 @@
-//Defining boolean variables to determine which drop-down filter was selected first
-var isDatetime = false
-var isCity = false
-var isState = false
-var isCountry = false
-var isShape = false
 
 /**
  * Loading all Data in index.html
  */
 function load_and_fillData()
 {
-    console.log("Get data")
 
     //Calling loadData() function to load data in HTML page
     loadData()
@@ -56,73 +49,99 @@ function setDropdownList(listNum, idName)
     })
 
     //Setting the first item in select list to '----'
-    list.splice(0,0,"<option> ---- </option>")
+    list.splice(0,0,"<option>-----</option>")
     
     //Ensuring only unique values are displayed
     document.getElementById(idName).innerHTML = [...new Set(list.sort())];
 }
 
 /**
- * When user select a specific date to filter data, the rest of lists in case user hasn't selected 
- * anything previously, are retrieving values according to selected date. Otherwise, the list will
- * keep user selection in the other lists.
+ * Displays data according to user's filter
  */
-function selectDatetime()
+function filterData()
 {
-    isDatetime = true
+    console.log("Filter Data")
+    //Getting values from all select lists
+    let datetime = document.getElementById("date_time").value
+    let city = document.getElementById("city").value
+    let state = document.getElementById("state").value
+    let country = document.getElementById("country").value
+    let shape = document.getElementById("shape").value
 
-    let selectedDate = document.getElementById("date_time").value
-    console.log("Selected date "+selectedDate+ " "+isCity)
+    /*Results will hold data filtered using user's inputs (filter parameters). It's initialized with whole data set (data),
+    * and each time a filter option is found it will narrow the data set
+    */
+    var results = data
 
-    tableData = data.filter(record => record.datetime == selectedDate)
+    //Validates whether the drop down list (select) has a value distinct of '-----' which means the user has added a specific filter
 
+    /*Datetime filter */
+    if (datetime.match(/-----/g)==null){
+        results = results.filter(function getData(rec){
+            return rec.datetime == datetime 
+        }
+        )
+        console.log("entro if datetime "+results.length)
+    }
 
-    /*Setting the rest of filters according to selectedDate in case the user hasn't selected any of
-    the other lists previously*/
+    /*City filter */
+    if (city.match(/-----/g)==null){
+        results = results.filter(function getData(rec){
+            return rec.city == city
+        }
+        )
+        console.log("entro if city")
+    }
 
-    /** CITY SELECT */
-    if (!isCity) setDropdownList(2, "city");
+    /*State filter */
+    if (state.match(/-----/g)==null){
+        results = results.filter(function getData(rec){
+            return rec.state == state
+        }
+        )
+
+    }
+
+    /*Country filter */
+    if (country.match(/-----/g)==null){
+        results = results.filter(function getData(rec){
+            return rec.country == country
+        }
+        )
+    }
     
-    /** STATE SELECT */
-    if (!isState) setDropdownList(3, "state");
+    /*Shape filter */
+    if (shape.match(/-----/g)==null){
+        results = results.filter(function getData(rec){
+            return rec.shape == shape
+        }
+        )
+    }
 
-    /** COUNTRY SELECT */
-    if (!isCountry) setDropdownList(4, "country");
+    //If there are any results, they will be displayed in page; otherwise, an alert message will appear to user
+    if(results.length>0){
+        //Assigning results list to tableData to be displayed
+        tableData = results;
 
-    /** SHAPE SELECT */
-    if (!isShape) setDropdownList(5, "shape");
+        //Clear previous displayed results in page
+        tbody.selectAll("tr").remove()
+        
+        //Loads data according to results
+        loadData();
+    }
+    else{
+        alert("No records found matching your search criteria. Please choose another one")
+    }
+    
+    
 
 }
-
-/**
- * When user select a specific city to filter data, the rest of lists in case user hasn't selected 
- * anything previously, are retrieving values according to selected date. Otherwise, the list will
- * keep user selection in the other lists.
- */
-function selectCity()
-{
-    isCity = true
-
-    let selectedCity = document.getElementById("city").value
-    console.log("Selected city "+selectedCity+" "+isDatetime)
-
-    tableData = data.filter(record => record.city == selectedCity)
-
-
-    /*Setting the rest of filters according to selectedDate in case the user hasn't selected any of
-    the other lists previously*/
-
-    /** DATETIME SELECT */
-    if (!isDatetime) setDropdownList(1, "date_time");
     
-    /** STATE SELECT */
-    if (!isState) setDropdownList(3, "state");
 
-    /** COUNTRY SELECT */
-    if (!isCountry) setDropdownList(4, "country");
+    
 
-    /** SHAPE SELECT */
-    if (!isShape) setDropdownList(5, "shape");
+    
 
-}
+
+
 
