@@ -39,3 +39,7 @@ Description
 
 * Using multiple input select dropdowns so that user can set multiple filters (datetime, city, state, country, and shape) to search for UFO sightings.
 
+
+## Styling
+
+HTML pages are styled using static/css/style.css file
