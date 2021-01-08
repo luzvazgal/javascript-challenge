@@ -6,7 +6,7 @@ The project's named 'Aliens are Real' or 'UFO project'. Despite the strange its 
 
 Project is composed by two sub-projects:
 
-1. UFO-level-1
+### 1. UFO-level-1
 
 Files:
 
@@ -24,7 +24,7 @@ Description
 
 * A date form in HTML document and JavaScript code that will listen for events and search through the date/time column to find rows that match user input.
 
-2. UFO-level-2
+### 2. UFO-level-2
 
 Files
 * index.html            Presentation HTML page
@@ -38,6 +38,17 @@ Description
 * Using #1 criteria to load data
 
 * Using multiple input select dropdowns so that user can set multiple filters (datetime, city, state, country, and shape) to search for UFO sightings.
+
+## Prerrequisites
+* Start HTTP server using python comman: python -m http.server.   Default location is localhost (127.0.0.1) and port 8000
+* To visualize your webpages in your browser:
+    
+    <b>UFO-level-1</b>
+     Type http://localhost:8000/UFO-level-1/
+
+     <b>UFO-level-2</b>
+     Type http://localhost:8000/UFO-level-2/
+
 
 
 ## Styling
