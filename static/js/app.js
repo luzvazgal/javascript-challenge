@@ -13,6 +13,7 @@ var tbody = d3.select("tbody");
  * it will display only content according to user's input (date)
  */
 function loadData(){
+    console.log("Table data "+tableData.length)
     //Variable to define if user's input (date) matches any of dates in data.js
     tableData.forEach( displayData )
   
@@ -59,8 +60,7 @@ function filterByDate()
     //Validate Date format
     if (validateDate()){
         //Clear previous displayed results in page
-        var rows = tbody.selectAll("tr")
-        rows.remove()
+        tbody.selectAll("tr").remove()
 
         //Reinitializing tableData to filtered data according to user's filter
         tableData = tableData.filter(record=> record.datetime == dateFilter)
@@ -87,11 +87,10 @@ function filterByDate()
 function validateDate()
 {
     let isValid = true;
-   // console.log("Validación 0 " + dateFilter.match(/\//g))
+   
 
     //If date doesn't have either first or second '/', date format is not valid
     if (dateFilter.match(/\//g).length != 2 ){
-     //   console.log("Validación 1 " + dateFilter.match(/\//g).length)
         return false
     }
 
@@ -100,23 +99,20 @@ function validateDate()
     let year = dateFilter.substring(dateFilter.lastIndexOf('/')+1)
 
     //Validates if month is a number between 1 and 12
-    //console.log("Validación 2a " + dateFilter.substring(0,1))
+    
     if(parseInt(month, 10)>=1 && parseInt(month, 10)<=12){
         month = parseInt(month, 10)
-      //  console.log("Validación 2")
     }
     else
         return false
 
     //Validates if day is valid to month's input
-    //console.log("Validación 3a " + parseInt(day, 10) + " month: "+month)
 
     switch (month){
         //Feb
         case 2:
             if(parseInt(day, 10)>=1 && parseInt(day, 10)<=28){
-                day = parseInt(day, 10)
-//                console.log("Validación 4")
+                day = parseInt(day, 10)              
             }
             else
                 return false
@@ -127,10 +123,8 @@ function validateDate()
         case 6:
         case 9:
         case 11:
-  //          console.log("Entro switch")
             if(parseInt(day, 10)>=1 && parseInt(day, 10)<=30){
                 day = parseInt(day, 10)
-    //            console.log("Validación 5")
             }
             else
                 return false
@@ -138,10 +132,8 @@ function validateDate()
 
         //Jan, Mar, May, Jul, Aug, Oct, Dec
         default:
-      //      console.log("Entro switch default")
             if(parseInt(day, 10)>=1 && parseInt(day, 10)<=31){
                 day = parseInt(day, 10)
-        //        console.log("Validación 3")
             }
             else
                 return false
@@ -149,10 +141,9 @@ function validateDate()
     }
 
     //Validates year is a valid four digit number
-    //console.log("Validación 4a " + parseInt(year, 10))
+    
     if (year.length !=4 || isNaN(parseInt(year, 10)))
     {
-      //  console.log("Validación 6")
        return false
     }
    
