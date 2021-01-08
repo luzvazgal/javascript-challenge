@@ -40,7 +40,9 @@ Description
 * Using multiple input select dropdowns so that user can set multiple filters (datetime, city, state, country, and shape) to search for UFO sightings.
 
 ## Prerrequisites
-* Start HTTP server using python comman: python -m http.server.   Default location is localhost (127.0.0.1) and port 8000
+* Start HTTP server using python command (in case you have Python previously installed): 
+            python -m http.server.   Default location is localhost (127.0.0.1) and port 8000
+
 * To visualize your webpages in your browser:
     
     <b>UFO-level-1</b>
